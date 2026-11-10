@@ -20,7 +20,7 @@ workflowDefinition:
           concurrencyPolicy: fail
         name: 'Task One'
         dependsOn:
-          - externalId: contextualize_ts_assets
+          - externalId: icapi_datapoints_extractor_task
     - externalId: icapi_datapoints_extractor_task
       type: 'function'
       parameters:
