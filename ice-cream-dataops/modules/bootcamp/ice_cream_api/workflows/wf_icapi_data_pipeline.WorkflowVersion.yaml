@@ -12,35 +12,32 @@ workflowDefinition:
         name: 'Task One'
         dependsOn:
           - externalId: contextualize_ts_assets_task
-    - externalId: contextualize_ts_assets_task
-      type: transformation
-      parameters:
-        transformation:
-          externalId: contextualize_ts_assets
-          concurrencyPolicy: fail
-        name: 'Task One'
-        dependsOn:
-          - externalId: icapi_datapoints_extractor_task
-    - externalId: icapi_datapoints_extractor_task
-      type: 'function'
-      parameters:
-        function:
-          externalId: icapi_datapoints_extractor
-          data: { "hours" : 1 }
-        retries: 3
-        timeout: 3600
-        inFailure: abortWorkflow
-        dependsOn:
-          - externalId: oee_timeseries_task
-    - externalId: oee_timeseries_task
-      type: 'function'
-      parameters:
-        function:
-          externalId: oee_timeseries
-          data: { "hours" : 1 }
-        retries: 3
-        timeout: 3600
-        inFailure: abortWorkflow
-        dependsOn:
-          - externalId: oee_timeseries_task
-        
+            type: transformation
+            parameters:
+              transformation:
+                externalId: contextualize_ts_assets
+                concurrencyPolicy: fail
+              name: 'Task One'
+              dependsOn:
+                - externalId: icapi_datapoints_extractor_task
+                  type: 'function'
+                  parameters:
+                    function:
+                      externalId: icapi_datapoints_extractor
+                      data: { "hours" : 1 }
+                    retries: 3
+                    timeout: 3600
+                    inFailure: abortWorkflow
+                    dependsOn:
+                      - externalId: oee_timeseries_task
+                        type: 'function'
+                        parameters:
+                          function:
+                            externalId: oee_timeseries
+                            data: { "hours" : 1 }
+                          retries: 3
+                          timeout: 3600
+                          inFailure: abortWorkflow
+                          dependsOn:
+                            - externalId: oee_timeseries_task
+                    
