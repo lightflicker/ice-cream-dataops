@@ -1,5 +1,5 @@
 workflowExternalId: wf_icapi_data_pipeline
-version: '3'
+version: '4'
 workflowDefinition:
   description: ''
   tasks:
@@ -10,8 +10,6 @@ workflowDefinition:
           externalId: create_asset_hierarchy
           concurrencyPolicy: fail
         name: 'Task One'
-        dependsOn:
-          - externalId: contextualize_ts_assets_task
     - externalId: contextualize_ts_assets_task
       type: transformation
       parameters:
@@ -20,7 +18,7 @@ workflowDefinition:
           concurrencyPolicy: fail
         name: 'Task One'
         dependsOn:
-          - externalId: icapi_datapoints_extractor_task
+          - externalId: create_asset_hierarchy_task
     - externalId: icapi_datapoints_extractor_task
       type: 'function'
       parameters:
@@ -31,7 +29,7 @@ workflowDefinition:
         timeout: 3600
         inFailure: abortWorkflow
         dependsOn:
-          - externalId: oee_timeseries_task
+          - externalId: contextualize_ts_assets_task
     - externalId: oee_timeseries_task
       type: 'function'
       parameters:
@@ -42,5 +40,5 @@ workflowDefinition:
         timeout: 3600
         inFailure: abortWorkflow
         dependsOn:
-          - externalId: oee_timeseries_task
+          - externalId: icapi_datapoints_extractor_task
   
